@@ -27,17 +27,24 @@ done
 
 echo "moviendo las secuencias al nuevo directorio"
 	
-mv *.fastq fastq_files_$n
+mv *.fastq fastq_files$n
 
 #Finalmente, sera necesario utilizar el comando fastqc para realizar el analisis de calidad de las secuencias
 #y almacenarlas de nuevo en un nuevo directorio.
 
-echo "Realizando analisis de calidad Fastqc con las secuencias descargadas en el fichero"
-lista2=$(cat *.fastq_files_$n)
-for x in $lista2:
+echo "Creando directorio para almacenar ficheros fastqc"
+
+y=0
+while ! mkdir fastqc_results$y
+do
+	y=$((n+1))
+done
+echo "Fichero Fastqc-results creado"
+
+for x in fastq_files$n:
 do
 	echo "Se va a analizar la calidad del archivo: $x"
-	fastqc -o ./fastqc_results $x
+	fastqc -o ./fastqc_results$y $x
 done
 
 "Descarga y filtrado realizado con exito"
