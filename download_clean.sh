@@ -1,4 +1,4 @@
-#!/bin/bash
+i!/bin/bash
 # Este pipeline tiene como objetivo leer un fichero input de lista de acceso de secuencias
 # para descargar todos los ficheros SRR de su interior y filtrarlos con fastqc. Funciona con secuencias paired-end
 # El script se debe situar donde el fichero de secuencias a descargar
@@ -36,5 +36,16 @@ echo "moviendo las secuencias al nuevo directorio"
 	
 mv *.fastq fastq_files_$n
 
-##Finalmente las secuencias filtradas quedan almacenadas en un mismo archivo. A trabajar! 
+#Finalmente, sera necesario utilizar el comando fastqc para realizar el analisis de calidad de las secuencias
+#y almacenarlas de nuevo en un nuevo directorio.
+
+echo "Realizando analisis de calidad Fastqc con las secuencias descargadas en el fichero"
+lista2=$(cat *.fastq_files_$n)
+for x in $lista2:
+do
+	echo "Se va a analizar la calidad del archivo: $x"
+	fastqc -o ./fastqc_results $x
+done
+
+"Descarga y filtrado realizado con exito"
 
